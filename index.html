@@ -3,16 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AbbyBunnyCat 的夢幻測驗與工具大廳 🐾✨</title>
+    <title>AbbyBunnyCat 的深夜樹洞圖書館 🦉🪵✨</title>
     
     <!-- Open Graph 標籤 -->
-    <meta property="og:title" content="AbbyBunnyCat 的夢幻測驗與工具大廳 🐾✨">
-    <meta property="og:description" content="快來和可愛小動物一起探索各種神秘占卜、命理運勢、心靈測驗、AI 創作與生活實用小工具吧！">
+    <meta property="og:title" content="AbbyBunnyCat 的深夜樹洞圖書館 🦉🪵✨">
+    <meta property="og:description" content="歡迎來到溫暖黃燈與木頭香氣的深夜樹洞圖書館，和森林小動物一起探索心靈與智慧吧！">
     <meta property="og:type" content="website">
 
     <style>
-        /* Google Fonts 引入可愛圓體 */
         @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
+
+        :root {
+            --bg-dark: #121614;
+            --bg-tree: #1a221e;
+            --wood-primary: #8d5b4c;
+            --wood-light: #a9715f;
+            --wood-card: rgba(30, 38, 33, 0.85);
+            --wood-card-hover: rgba(42, 53, 46, 0.95);
+            --amber-glow: #f59e0b;
+            --text-main: #f3f4f6;
+            --text-sub: #b2bba8;
+            --border-wood: #5a3d31;
+        }
 
         * {
             box-sizing: border-box;
@@ -22,438 +34,147 @@
 
         body {
             font-family: 'Zen Maru Gothic', 'PingFang TC', 'Microsoft JhengHei', sans-serif;
-            background: linear-gradient(135deg, #fff0f5 0%, #fff9fb 50%, #f0f7ff 100%);
-            /* 甜美背景波點圖案 */
-            background-image: 
-                radial-gradient(#ffd6e7 18%, transparent 19%),
-                radial-gradient(#e0f2fe 18%, transparent 19%);
-            background-size: 50px 50px;
-            background-position: 0 0, 25px 25px;
-            color: #5a4b51;
-            padding: 50px 20px;
+            background: radial-gradient(circle at 50% 20%, #222e26 0%, var(--bg-dark) 100%);
+            color: var(--text-main);
+            padding: 50px 20px 100px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
         }
 
-        /* 頂部 Header */
+        /* 森林深夜微光與營火效果 */
+        .forest-ambience {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .firefly {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #fde047;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #f59e0b, 0 0 20px #f59e0b;
+            animation: flyAround 15s infinite linear;
+            opacity: 0.6;
+        }
+
+        @keyframes flyAround {
+            0% { transform: translate(0, 0); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translate(calc(100vw * var(--tx, 1)), calc(100vh * var(--ty, -1))); opacity: 0; }
+        }
+
+        /* 頂部層級 */
+        header, .control-panel, main, footer {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 1140px;
+        }
+
+        /* 圖書館招牌區 */
         header {
             text-align: center;
-            margin-bottom: 45px;
-            position: relative;
+            margin-bottom: 35px;
+        }
+
+        .library-badge {
+            display: inline-block;
+            background: rgba(141, 91, 76, 0.3);
+            color: #fde047;
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 6px 18px;
+            border-radius: 999px;
+            border: 1.5px solid var(--wood-light);
+            margin-bottom: 14px;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.15);
         }
 
         header h1 {
-            color: #ff6b9d;
-            font-size: 2.5rem;
+            color: #fde68a;
+            font-size: 2.6rem;
             font-weight: 900;
-            margin-bottom: 12px;
-            text-shadow: 2px 2px 0px #fff, 4px 4px 0px #ffd2e1;
-            letter-spacing: 1px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(245, 158, 11, 0.4), 0 4px 20px rgba(0,0,0,0.8);
+            letter-spacing: 1.5px;
         }
 
         header p {
-            color: #7d636e;
-            font-size: 1.1rem;
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(5px);
-            padding: 8px 24px;
-            border-radius: 30px;
-            display: inline-block;
-            box-shadow: 0 4px 15px rgba(255, 182, 193, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-        }
-
-        /* 主要目錄區域 */
-        main {
-            max-width: 1100px;
-            width: 100%;
-        }
-
-        .category-section {
-            margin-bottom: 50px;
-        }
-
-        /* 目錄標題樣式 */
-        .category-title {
-            font-size: 1.4rem;
-            font-weight: 900;
-            color: #ff5e97;
-            background: rgba(255, 255, 255, 0.9);
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            padding: 8px 22px;
-            border-radius: 30px;
-            border: 2px dashed #ffb6c1;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 12px rgba(255, 182, 193, 0.2);
-        }
-
-        /* 卡片網格 */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 28px;
-        }
-
-        /* 卡片本體 */
-        .card {
-            background: rgba(255, 255, 255, 0.92);
-            border: 2px solid #ffe3ec;
-            border-radius: 24px;
-            padding: 30px 20px 22px 20px;
-            text-decoration: none;
-            color: #5a4b51;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 8px 20px rgba(255, 182, 193, 0.15);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            backdrop-filter: blur(6px);
-        }
-
-        .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: #ff9ebb;
-            box-shadow: 0 15px 30px rgba(255, 158, 187, 0.35);
-            background: #ffffff;
-        }
-
-        /* 卡片內的標籤 Badge */
-        .new-badge {
-            position: absolute;
-            top: -12px;
-            right: 15px;
-            background: linear-gradient(45deg, #ff758c, #ff7eb3);
-            color: white;
-            font-size: 0.78rem;
-            font-weight: 900;
-            padding: 4px 12px;
-            border-radius: 12px;
-            box-shadow: 0 3px 8px rgba(255, 117, 140, 0.4);
+            color: var(--text-sub);
+            font-size: 1.05rem;
             letter-spacing: 0.5px;
         }
 
-        /* 卡片圖示與標題 */
-        .card-icon {
-            font-size: 3.2rem;
-            margin-bottom: 12px;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
-        }
-
-        .card h2 {
-            font-size: 1.35rem;
-            color: #ff4d8d;
-            margin-bottom: 8px;
-            font-weight: 900;
-        }
-
-        .card p {
-            font-size: 0.92rem;
-            color: #7a6871;
-            line-height: 1.5;
-            margin-bottom: 18px;
-        }
-
-        /* 可愛小動物動態說明區 */
-        .animal-helper {
-            margin-top: auto;
+        /* 互動控制列：木質書櫃搜尋與分類 */
+        .control-panel {
+            background: rgba(30, 38, 33, 0.85);
+            backdrop-filter: blur(10px);
+            border: 2px solid var(--border-wood);
+            border-radius: 24px;
+            padding: 20px 24px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
             align-items: center;
-            gap: 8px;
-            background-color: #fff3f7;
-            padding: 6px 14px;
-            border-radius: 20px;
-            border: 1px solid #ffd8e5;
-            position: relative;
-            width: 100%;
-            justify-content: center;
+            justify-content: space-between;
         }
 
-        .animal-avatar {
-            font-size: 1.5rem;
-            animation: bounce 2s infinite ease-in-out;
+        .filter-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
         }
 
-        .animal-dialog {
-            font-size: 0.82rem;
-            color: #ff548d;
+        .tab-btn {
+            font-family: inherit;
+            font-size: 0.92rem;
             font-weight: 700;
+            color: var(--text-sub);
+            background: rgba(18, 22, 20, 0.8);
+            border: 2px solid #36453b;
+            padding: 8px 18px;
+            border-radius: 999px;
+            cursor: pointer;
+            transition: all 0.3s ease;
         }
 
-        /* 卡片 Hover 時動物跳躍加劇 */
-        .card:hover .animal-avatar {
-            animation: happyJump 0.5s infinite alternate ease-in-out;
+        .tab-btn:hover {
+            border-color: var(--amber-glow);
+            color: #fde68a;
+            transform: translateY(-2px);
         }
 
-        /* 動畫效果 */
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+        .tab-btn.active {
+            background: linear-gradient(135deg, #b45309, #d97706);
+            color: #ffffff;
+            border-color: #f59e0b;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
         }
 
-        @keyframes happyJump {
-            0% { transform: translateY(0) rotate(-5deg); }
-            100% { transform: translateY(-8px) rotate(5deg); }
+        .search-box {
+            position: relative;
+            flex: 1 1 240px;
+            max-width: 300px;
         }
 
-        /* 頁尾 */
-        footer {
-            margin-top: 40px;
-            text-align: center;
-            color: #b59fa8;
-            font-size: 0.9rem;
-        }
-
-        footer span {
-            color: #ff6b9d;
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>AbbyBunnyCat 的夢幻大廳 🐾✨</h1>
-        <p>點擊卡片開啟探索，和小動物們一起探索夢幻世界吧！</p>
-    </header>
-
-    <main>
-
-        <!-- 分類一：神秘力量與命理運勢 -->
-        <section class="category-section">
-            <div class="category-title">
-                <span>🔮</span> 神秘力量與命理運勢
-            </div>
-            <div class="grid-container">
-
-                <!-- Archangel -->
-                <a href="https://abbybunnycat.github.io/Archangel/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">👼</div>
-                    <h2>Archangel</h2>
-                    <p>大天使神諭卡，聆聽來自大天使的溫柔指引與神聖祝福。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🕊️</span>
-                        <span class="animal-dialog">小白鴿：「大天使正在傳遞充滿愛的光芒～」</span>
-                    </div>
-                </a>
-
-                <!-- AI5 -->
-                <a href="https://abbybunnycat.github.io/ai5/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">☯️</div>
-                    <h2>AI5 命理探索</h2>
-                    <p>結合神秘命理與智慧推演，為你解開命運的玄妙密碼。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🦊</span>
-                        <span class="animal-dialog">小仙狐：「來算算你的專屬命理指引吧！」</span>
-                    </div>
-                </a>
-
-                <!-- OracleCard -->
-                <a href="https://abbybunnycat.github.io/OracleCard/?test=true" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">🃏</div>
-                    <h2>Oracle Card</h2>
-                    <p>全新神諭卡測驗，抽取靈魂深處的神秘牌卡。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐱</span>
-                        <span class="animal-dialog">小貓咪：「來抽一張今天的靈魂牌卡吧！」</span>
-                    </div>
-                </a>
-
-                <!-- Cosmic Oracle -->
-                <a href="https://abbybunnycat.github.io/cosmic_oracle/" target="_blank" rel="noopener noreferrer" class="card">
-                    <div class="card-icon">🌌</div>
-                    <h2>Cosmic Oracle</h2>
-                    <p>宇宙神諭，為你當下的迷惘解答惑。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐼</span>
-                        <span class="animal-dialog">熊貓：「抬頭看看星空，宇宙有話對你說～」</span>
-                    </div>
-                </a>
-
-                <!-- 觀音靈籤 -->
-                <a href="https://abbybunnycat.github.io/kuanyin/" target="_blank" rel="noopener noreferrer" class="card">
-                    <div class="card-icon">🙏</div>
-                    <h2>觀音靈籤</h2>
-                    <p>虔誠祈願，求取指引與解答的心靈籤詩。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐱</span>
-                        <span class="animal-dialog">招財貓：「心誠則靈，為你祈求平安好運！」</span>
-                    </div>
-                </a>
-
-                <!-- Office Fortune -->
-                <a href="https://abbybunnycat.github.io/office_fortune/" target="_blank" rel="noopener noreferrer" class="card">
-                    <div class="card-icon">💼</div>
-                    <h2>Office Fortune</h2>
-                    <p>職場運勢大補帖，看看今天工作順不順！</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐶</span>
-                        <span class="animal-dialog">小狗：「加油打工人！今天運勢一定棒！」</span>
-                    </div>
-                </a>
-
-                <!-- Cosmic Fortune -->
-                <a href="https://abbybunnycat.github.io/cosmic-fortune/" target="_blank" rel="noopener noreferrer" class="card">
-                    <div class="card-icon">✨</div>
-                    <h2>Cosmic Fortune</h2>
-                    <p>連結星空的力量，測出你的今日好運。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐻</span>
-                        <span class="animal-dialog">小熊：「為你接收滿滿的幸運星光～」</span>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- 分類二：心靈與性格探索 -->
-        <section class="category-section">
-            <div class="category-title">
-                <span>🧠</span> 心靈與性格探索
-            </div>
-            <div class="grid-container">
-
-                <!-- Boundary -->
-                <a href="https://abbybunnycat.github.io/boundary/" target="_blank" rel="noopener noreferrer" class="card">
-                    <div class="card-icon">🚧</div>
-                    <h2>Boundary</h2>
-                    <p>點擊進入測驗，探索你的專屬人際邊界。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🦭</span>
-                        <span class="animal-dialog">海豹：「劃清舒服的邊界，才能好好生活哦！」</span>
-                    </div>
-                </a>
-
-                <!-- MBTI 100 -->
-                <a href="https://abbybunnycat.github.io/mbti100/" target="_blank" rel="noopener noreferrer" class="card">
-                    <div class="card-icon">🧠</div>
-                    <h2>MBTI 100</h2>
-                    <p>100% 深入的性格分析小測驗。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐰</span>
-                        <span class="animal-dialog">小白兔：「深入探索，看看你是哪種小動物性格！」</span>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- 分類三：知識學習與 AI 探索 -->
-        <section class="category-section">
-            <div class="category-title">
-                <span>📚</span> 知識學習與 AI 探索
-            </div>
-            <div class="grid-container">
-
-                <!-- Image Master (最新新增) -->
-                <a href="https://abbybunnycat.github.io/image_master/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">🎨</div>
-                    <h2>Image Master</h2>
-                    <p>AI 圖像大師，解鎖視覺藝術創作與生成提示詞技巧！</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐧</span>
-                        <span class="animal-dialog">小企鵝：「揮灑繪畫靈感，一起繪製夢幻圖片！」</span>
-                    </div>
-                </a>
-
-                <!-- iPAS AI Advance -->
-                <a href="https://abbybunnycat.github.io/ipas_ai_advance/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">🎯</div>
-                    <h2>iPAS AI 進階認證</h2>
-                    <p>iPAS AI 應用規劃師進階題庫與強化練習，進階突破必備！</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🦁</span>
-                        <span class="animal-dialog">小獅王：「挑戰進階關卡，高分拿下證照！」</span>
-                    </div>
-                </a>
-
-                <!-- iPAS AI Basic -->
-                <a href="https://abbybunnycat.github.io/ipas_ai_basic/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">📝</div>
-                    <h2>iPAS AI 初級認證</h2>
-                    <p>iPAS AI 應用規劃師初級備考助手，考前刷題一把罩！</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐻</span>
-                        <span class="animal-dialog">台灣黑熊：「認真複習，祝福你順利通過認證！」</span>
-                    </div>
-                </a>
-
-                <!-- Angel Prompt -->
-                <a href="https://abbybunnycat.github.io/angelprompt/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">🪽</div>
-                    <h2>Angel Prompt</h2>
-                    <p>天使提示詞寶庫，解鎖神奇的 AI Prompt 魔法！</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🦄</span>
-                        <span class="animal-dialog">獨角獸：「施展 Prompt 魔法，發揮無限想像力！」</span>
-                    </div>
-                </a>
-
-                <!-- Claude Academy -->
-                <a href="https://abbybunnycat.github.io/claude_academy/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">🎓</div>
-                    <h2>Claude Academy</h2>
-                    <p>Claude AI 學習學院，探索神奇的 AI 知識與技巧！</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🦉</span>
-                        <span class="animal-dialog">貓頭鷹博士：「跟我一起學習，成為 AI 小達人吧！」</span>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-        <!-- 分類四：健康與生活實用工具 -->
-        <section class="category-section">
-            <div class="category-title">
-                <span>🥗</span> 健康與生活實用工具
-            </div>
-            <div class="grid-container">
-
-                <!-- Nutritional Guidelines -->
-                <a href="https://abbybunnycat.github.io/Nutritional_Guidelines/" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">🥗</div>
-                    <h2>Nutritional Guidelines</h2>
-                    <p>飲食與營養指南，幫你打造健康的日常飲食！</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐱</span>
-                        <span class="animal-dialog">黃貓：「好好吃飯，吃得均衡才有滿滿活力！」</span>
-                    </div>
-                </a>
-
-                <!-- Food Allocation App -->
-                <a href="https://abbybunnycat.github.io/food_allocation_app" target="_blank" rel="noopener noreferrer" class="card">
-                    <span class="new-badge">✨ NEW</span>
-                    <div class="card-icon">🍱</div>
-                    <h2>Food Allocation</h2>
-                    <p>輕鬆規劃美味餐點與食物分配的小幫手。</p>
-                    <div class="animal-helper">
-                        <span class="animal-avatar">🐿️</span>
-                        <span class="animal-dialog">小松鼠：「今天吃什麼？交給我來幫你分配美味吧！」</span>
-                    </div>
-                </a>
-
-            </div>
-        </section>
-
-    </main>
-
-    <footer>
-        <p>© AbbyBunnyCat. Made with <span>♥</span> & Cute Animals.</p>
-    </footer>
-
-</body>
-</html>
+        .search-box input {
+            width: 100%;
+            font-family: inherit;
+            font-size: 0.92rem;
+            color: #ffffff;
+            background: rgba(18, 22, 20, 0.9);
+            border: 2px solid #36453b;
+            border-radius: 999px;
+            padding: 10px 18px 10px 40px;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
