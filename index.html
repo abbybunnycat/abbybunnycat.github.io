@@ -393,4 +393,520 @@
         .empty-state {
             display: none;
             text-align: center;
-            padding: 50px 2
+            padding: 50px 20px;
+            background: rgba(30, 38, 33, 0.85);
+            border-radius: 24px;
+            border: 2px dashed var(--wood-light);
+            color: var(--text-sub);
+            margin-bottom: 30px;
+        }
+
+        /* 右下角館長推薦浮動按鈕 */
+        .lucky-fab {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            z-index: 20;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 900;
+            color: #1a221e;
+            background: linear-gradient(135deg, #fde047, #f59e0b);
+            border: 3px solid #ffffff;
+            border-radius: 999px;
+            padding: 12px 22px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .lucky-fab:hover {
+            transform: scale(1.06) translateY(-3px);
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.6);
+        }
+
+        /* 隨機推薦彈窗 */
+        .lucky-toast {
+            position: fixed;
+            right: 24px;
+            bottom: 88px;
+            z-index: 20;
+            width: 300px;
+            background: #1e2621;
+            border: 2.5px solid var(--amber-glow);
+            border-radius: 22px;
+            padding: 18px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            display: none;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .lucky-toast.show {
+            display: block;
+        }
+
+        @keyframes popIn {
+            from { opacity: 0; transform: translateY(15px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .lucky-toast-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.88rem;
+            font-weight: 900;
+            color: #fde68a;
+            margin-bottom: 8px;
+        }
+
+        .lucky-close {
+            background: none;
+            border: none;
+            font-size: 1rem;
+            color: var(--text-sub);
+            cursor: pointer;
+        }
+
+        .lucky-body {
+            font-size: 0.9rem;
+            color: var(--text-main);
+            line-height: 1.5;
+            margin-bottom: 14px;
+        }
+
+        .lucky-go {
+            display: block;
+            text-align: center;
+            background: rgba(245, 158, 11, 0.2);
+            color: #fde68a;
+            font-weight: 900;
+            font-size: 0.88rem;
+            padding: 9px;
+            border-radius: 12px;
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .lucky-go:hover {
+            background: rgba(245, 158, 11, 0.35);
+        }
+
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: var(--text-sub);
+            font-size: 0.9rem;
+        }
+
+        footer span {
+            color: #f59e0b;
+        }
+
+        @media (max-width: 640px) {
+            header h1 { font-size: 2rem; }
+            .search-box { max-width: 100%; }
+            .lucky-toast { right: 16px; left: 16px; width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 森林深夜螢火蟲背景 -->
+    <div class="forest-ambience" id="ambience"></div>
+
+    <header>
+        <div class="library-badge">🦉 深夜樹洞圖書館 · Midnight Treehouse Library</div>
+        <h1>AbbyBunnyCat 的森林藏書閣</h1>
+        <p>在暖黃燈光與木頭香氣中，和森林小動物館員一起翻閱靈感與知識吧～</p>
+    </header>
+
+    <!-- 藏書閣控制列 -->
+    <div class="control-panel">
+        <div class="filter-tabs" id="filterTabs">
+            <button class="tab-btn active" data-filter="all">🪵 全部藏書 (18)</button>
+            <button class="tab-btn" data-filter="mystic">🔮 預言與命理</button>
+            <button class="tab-btn" data-filter="mind">🧠 心靈與人格</button>
+            <button class="tab-btn" data-filter="ai">📚 學習與 AI</button>
+            <button class="tab-btn" data-filter="life">🍵 生活、理財與健康</button>
+        </div>
+        <div class="search-box">
+            <span>🔍</span>
+            <input type="text" id="searchInput" placeholder="在書架中尋找書本...">
+        </div>
+    </div>
+
+    <main>
+        <div class="empty-state" id="emptyState">
+            🦉 貓頭鷹博士在書架翻遍了，找不到符合的藏書耶～換個關鍵字試試看吧！
+        </div>
+
+        <!-- 區塊一：預言與命理 -->
+        <section class="category-section" data-section="mystic">
+            <div class="category-header">
+                <div class="category-title"><span>🔮</span> 預言與命理藏書閣</div>
+                <span class="count-pill">8 冊</span>
+            </div>
+            <div class="grid-container">
+
+                <a href="https://abbybunnycat.github.io/the_daily_prophet/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">📰</div>
+                    <h2>The Daily Prophet</h2>
+                    <p>每日預言家日報，為你送來最新的魔法預言與今日運勢頭條！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🦉</span>
+                        <span class="animal-dialog">信使貓頭鷹：「嘟嘟！今天的預言家日報送達囉～」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/Archangel/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">👼</div>
+                    <h2>Archangel</h2>
+                    <p>大天使神諭卡，聆聽來自大天使的溫柔指引與神聖祝福。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🕊️</span>
+                        <span class="animal-dialog">小白鴿：「大天使正在傳遞充滿愛的光芒～」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/ai5/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">☯️</div>
+                    <h2>AI5 命理探索</h2>
+                    <p>結合神秘命理與智慧推演，為你解開命運的玄妙密碼。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🦊</span>
+                        <span class="animal-dialog">小仙狐：「來算算你的專屬命理指引吧！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/OracleCard/?test=true" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">🃏</div>
+                    <h2>Oracle Card</h2>
+                    <p>全新神諭卡測驗，抽取靈魂深處的神秘牌卡。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐱</span>
+                        <span class="animal-dialog">小貓咪：「來抽一張今天的靈魂牌卡吧！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/cosmic_oracle/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">🌌</div>
+                    <h2>Cosmic Oracle</h2>
+                    <p>宇宙神諭，為你當下的迷惘解答惑。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐼</span>
+                        <span class="animal-dialog">熊貓：「抬頭看看星空，宇宙有話對你說～」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/kuanyin/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">🙏</div>
+                    <h2>觀音靈籤</h2>
+                    <p>虔誠祈願，求取指引與解答的心靈籤詩。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐱</span>
+                        <span class="animal-dialog">招財貓：「心誠則靈，為你祈求平安好運！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/office_fortune/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">💼</div>
+                    <h2>Office Fortune</h2>
+                    <p>職場運勢大補帖，看看今天工作順不順！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐶</span>
+                        <span class="animal-dialog">小狗：「加油打工人！今天運勢一定棒！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/cosmic-fortune/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mystic">
+                    <div class="icon-circle">✨</div>
+                    <h2>Cosmic Fortune</h2>
+                    <p>連結星空的力量，測出你的今日好運。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐻</span>
+                        <span class="animal-dialog">小熊：「為你接收滿滿的幸運星光～」</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- 區塊二：心靈與人格 -->
+        <section class="category-section" data-section="mind">
+            <div class="category-header">
+                <div class="category-title"><span>🧠</span> 心靈與人格研究室</div>
+                <span class="count-pill">2 冊</span>
+            </div>
+            <div class="grid-container">
+
+                <a href="https://abbybunnycat.github.io/boundary/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mind">
+                    <div class="icon-circle">🚧</div>
+                    <h2>Boundary</h2>
+                    <p>點擊進入測驗，探索你的專屬人際邊界。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🦭</span>
+                        <span class="animal-dialog">海豹：「劃清舒服的邊界，才能好好生活哦！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/mbti100/" target="_blank" rel="noopener noreferrer" class="card" data-cat="mind">
+                    <div class="icon-circle">🧠</div>
+                    <h2>MBTI 100</h2>
+                    <p>100% 深入的性格分析小測驗。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐰</span>
+                        <span class="animal-dialog">小白兔：「深入探索，看看你是哪種小動物性格！」</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- 區塊三：學習與 AI -->
+        <section class="category-section" data-section="ai">
+            <div class="category-header">
+                <div class="category-title"><span>📚</span> AI 與知識學術殿堂</div>
+                <span class="count-pill">5 冊</span>
+            </div>
+            <div class="grid-container">
+
+                <a href="https://abbybunnycat.github.io/image_master/" target="_blank" rel="noopener noreferrer" class="card" data-cat="ai">
+                    <div class="icon-circle">🎨</div>
+                    <h2>Image Master</h2>
+                    <p>AI 圖像大師，解鎖視覺藝術創作與生成提示詞技巧！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐧</span>
+                        <span class="animal-dialog">小企鵝：「揮灑繪畫靈感，一起繪製夢幻圖片！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/ipas_ai_advance/" target="_blank" rel="noopener noreferrer" class="card" data-cat="ai">
+                    <div class="icon-circle">🎯</div>
+                    <h2>iPAS AI 進階認證</h2>
+                    <p>iPAS AI 應用規劃師進階題庫與強化練習，進階突破必備！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🦁</span>
+                        <span class="animal-dialog">小獅王：「挑戰進階關卡，高分拿下證照！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/ipas_ai_basic/" target="_blank" rel="noopener noreferrer" class="card" data-cat="ai">
+                    <div class="icon-circle">📝</div>
+                    <h2>iPAS AI 初級認證</h2>
+                    <p>iPAS AI 應用規劃師初級備考助手，考前刷題一把罩！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐻</span>
+                        <span class="animal-dialog">台灣黑熊：「認真複習，祝福你順利通過認證！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/angelprompt/" target="_blank" rel="noopener noreferrer" class="card" data-cat="ai">
+                    <div class="icon-circle">🪽</div>
+                    <h2>Angel Prompt</h2>
+                    <p>天使提示詞寶庫，解鎖神奇的 AI Prompt 魔法！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🦄</span>
+                        <span class="animal-dialog">獨角獸：「施展 Prompt 魔法，發揮無限想像力！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/claude_academy/" target="_blank" rel="noopener noreferrer" class="card" data-cat="ai">
+                    <div class="icon-circle">🎓</div>
+                    <h2>Claude Academy</h2>
+                    <p>Claude AI 學習學院，探索神奇的 AI 知識與技巧！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🦉</span>
+                        <span class="animal-dialog">貓頭鷹博士：「跟我一起學習，成為 AI 小達人吧！」</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- 區塊四：生活、理財與健康 -->
+        <section class="category-section" data-section="life">
+            <div class="category-header">
+                <div class="category-title"><span>🍵</span> 生活、理財與健康休憩小坊</div>
+                <span class="count-pill">3 冊</span>
+            </div>
+            <div class="grid-container">
+
+                <a href="https://20261112-liart.vercel.app/" target="_blank" rel="noopener noreferrer" class="card" data-cat="life">
+                    <span class="new-badge">✨ NEW</span>
+                    <div class="icon-circle">🪙</div>
+                    <h2>臺灣銀行黃金存摺</h2>
+                    <p>每日牌價與走勢看板，即時掌握金價波動與理財脈動！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐹</span>
+                        <span class="animal-dialog">黃金小倉鼠：「閃亮亮的金價走勢，幫你一起盯盤！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/Nutritional_Guidelines/" target="_blank" rel="noopener noreferrer" class="card" data-cat="life">
+                    <div class="icon-circle">🥗</div>
+                    <h2>Nutritional Guidelines</h2>
+                    <p>飲食與營養指南，幫你打造健康的日常飲食！</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐱</span>
+                        <span class="animal-dialog">黃貓：「好好吃飯，吃得均衡才有滿滿活力！」</span>
+                    </div>
+                </a>
+
+                <a href="https://abbybunnycat.github.io/food_allocation_app" target="_blank" rel="noopener noreferrer" class="card" data-cat="life">
+                    <div class="icon-circle">🍱</div>
+                    <h2>Food Allocation</h2>
+                    <p>輕鬆規劃美味餐點與食物分配的小幫手。</p>
+                    <div class="animal-helper">
+                        <span class="animal-avatar">🐿️</span>
+                        <span class="animal-dialog">小松鼠：「今天吃什麼？交給我來幫你分配美味吧！」</span>
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 館長隨機推薦彈窗 -->
+    <div class="lucky-toast" id="luckyToast">
+        <div class="lucky-toast-header">
+            <span id="luckyAnimalTitle">🦉 館長推薦今日好書</span>
+            <button class="lucky-close" id="luckyClose" aria-label="關閉">✕</button>
+        </div>
+        <div class="lucky-body" id="luckyBody"></div>
+        <a href="#" target="_blank" rel="noopener noreferrer" class="lucky-go" id="luckyLink">翻開這本書閱讀 →</a>
+    </div>
+
+    <!-- 浮動館長推薦按鈕 -->
+    <button class="lucky-fab" id="luckyBtn">
+        <span>📖</span> 館長幫我抽一本！
+    </button>
+
+    <footer>
+        <p>© AbbyBunnyCat. Crafted with <span>💛</span> & Warm Wood & Fireflies.</p>
+    </footer>
+
+    <script>
+        // 生成一閃一閃的森林螢火蟲（外層漂浮 + 內層呼吸閃爍）
+        const ambience = document.getElementById('ambience');
+        const fireflyColors = [
+            { core: '#fef08a', glow: '#f59e0b' }, // 暖琥珀黃
+            { core: '#fde047', glow: '#eab308' }, // 柔和金黃
+            { core: '#d9f99d', glow: '#84cc16' }  // 森林螢火微綠
+        ];
+
+        for (let i = 0; i < 55; i++) {
+            const wrap = document.createElement('div');
+            wrap.className = 'firefly-wrap';
+            wrap.style.left = `${Math.random() * 100}vw`;
+            wrap.style.top = `${Math.random() * 100}vh`;
+            wrap.style.setProperty('--dx1', `${(Math.random() - 0.5) * 140}px`);
+            wrap.style.setProperty('--dy1', `${(Math.random() - 0.5) * 140}px`);
+            wrap.style.setProperty('--dx2', `${(Math.random() - 0.5) * 160}px`);
+            wrap.style.setProperty('--dy2', `${(Math.random() - 0.5) * 160}px`);
+            wrap.style.setProperty('--dx3', `${(Math.random() - 0.5) * 120}px`);
+            wrap.style.setProperty('--dy3', `${(Math.random() - 0.5) * 120}px`);
+            wrap.style.setProperty('--float-dur', `${14 + Math.random() * 14}s`);
+
+            const dot = document.createElement('span');
+            dot.className = 'firefly';
+            const size = (2.5 + Math.random() * 4.5).toFixed(1);
+            const palette = fireflyColors[Math.floor(Math.random() * fireflyColors.length)];
+
+            dot.style.setProperty('--size', `${size}px`);
+            dot.style.setProperty('--core-color', palette.core);
+            dot.style.setProperty('--glow-color', palette.glow);
+            dot.style.setProperty('--twinkle-dur', `${1.4 + Math.random() * 2.6}s`);
+            dot.style.setProperty('--twinkle-delay', `-${(Math.random() * 4).toFixed(2)}s`);
+
+            wrap.appendChild(dot);
+            ambience.appendChild(wrap);
+        }
+
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const sections = document.querySelectorAll('.category-section');
+        const cards = document.querySelectorAll('.card');
+        const searchInput = document.getElementById('searchInput');
+        const emptyState = document.getElementById('emptyState');
+
+        let currentFilter = 'all';
+
+        function updateView() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            let visibleCount = 0;
+
+            sections.forEach(section => {
+                const sectionCat = section.dataset.section;
+                const matchFilter = (currentFilter === 'all' || currentFilter === sectionCat);
+                
+                if (!matchFilter) {
+                    section.classList.add('hidden');
+                    return;
+                }
+
+                const sectionCards = section.querySelectorAll('.card');
+                let sectionVisible = 0;
+
+                sectionCards.forEach(card => {
+                    const text = card.innerText.toLowerCase();
+                    if (text.includes(keyword)) {
+                        card.classList.remove('hidden');
+                        sectionVisible++;
+                        visibleCount++;
+                    } else {
+                        card.classList.add('hidden');
+                    }
+                });
+
+                section.classList.toggle('hidden', sectionVisible === 0);
+            });
+
+            emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+        }
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentFilter = btn.dataset.filter;
+                updateView();
+            });
+        });
+
+        searchInput.addEventListener('input', updateView);
+
+        // 館長隨機抽書彩蛋
+        const luckyBtn = document.getElementById('luckyBtn');
+        const luckyToast = document.getElementById('luckyToast');
+        const luckyClose = document.getElementById('luckyClose');
+        const luckyAnimalTitle = document.getElementById('luckyAnimalTitle');
+        const luckyBody = document.getElementById('luckyBody');
+        const luckyLink = document.getElementById('luckyLink');
+
+        luckyBtn.addEventListener('click', () => {
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            const title = randomCard.querySelector('h2').innerText;
+            const avatar = randomCard.querySelector('.animal-avatar').innerText;
+            const dialog = randomCard.querySelector('.animal-dialog').innerText;
+
+            luckyAnimalTitle.innerText = `${avatar} 貓頭鷹館長推薦`;
+            luckyBody.innerHTML = `館長在樹洞深處為你抽中了藏書：<br><strong>「${title}」</strong><br>${dialog}`;
+            luckyLink.href = randomCard.href;
+
+            luckyToast.classList.remove('show');
+            void luckyToast.offsetWidth;
+            luckyToast.classList.add('show');
+        });
+
+        luckyClose.addEventListener('click', () => {
+            luckyToast.classList.remove('show');
+        });
+    </script>
+
+</body>
+</html>
